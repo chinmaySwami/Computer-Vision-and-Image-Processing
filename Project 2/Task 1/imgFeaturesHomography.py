@@ -34,6 +34,42 @@ for m,n in matchedKeypoints:
     if m.distance < 0.75*n.distance:
         goodMatches.append(m)
 
-#Plot the matched keypoints that satisfied the threshold
+# Plot the matched keypoints that satisfied the threshold
 img3 = cv2.drawMatches(image1G,keyPointImage1,image2G,keyPointImage2,goodMatches,None,flags=2)
 cv2.imwrite("task1_matches_knn.jpg",img3)
+
+# Task 1.3 & 1.4
+
+sourcePoints = np.float32([keyPointImage1[m.queryIdx].pt for m in goodMatches])
+destinationPoints = np.float32([keyPointImage2[m.queryIdx].pt for m in goodMatches])
+
+# for m in goodMatches:
+#     sourcePoints = np.float32(keyPointImage1[m.queryIndex].pt)
+# sourcePoints.reshape(-1,1,2)
+#
+# for m in goodMatches:
+#     destinationPoints = np.float32(keyPointImage2[m.queryIndex].pt)
+# destinationPoints.reshape(-1,1,2)
+
+homographyMatrix, inOut = cv2.findHomography(sourcePoints,destinationPoints,cv2.RANSAC,5.0)
+print("homography matrix H is: \n",homographyMatrix)
+print(type(inOut),inOut.shape)
+matchedMask = inOut.ravel().tolist() # ravel is used to flatten the inOut array
+
+unique, counts = np.unique(matchedMask, return_counts=True)
+print(dict(zip(unique, counts)))
+
+height,width = image1G.shape
+# points = np.float32([ [0,0],[0,height-1],[width-1,height-1],[width-1,0] ])
+# distance = cv2.perspectiveTransform(points,homographyMatrix)
+
+parameters = dict(matchColor = (0,0,0), # draw matches in black color
+                   singlePointColor = None,
+                   matchesMask = matchedMask, # draw only inliers
+                   flags = 2)
+
+img5 = cv2.drawMatches(image1G,keyPointImage1,image2G,keyPointImage2,goodMatches,None,**parameters)
+cv2.imwrite("task1_matches.jpg",img5)
+
+im_out = cv2.warpPerspective(image1G, homographyMatrix,(image2G.shape[1],image2G.shape[0]))
+cv2.imwrite("task1_pano.jpg",im_out)
