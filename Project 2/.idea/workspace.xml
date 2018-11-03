@@ -12,13 +12,13 @@
     <session id="-1990014265">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
-          <entry key="project.open.time.0" value="2" />
+          <entry key="project.closed" value="13" />
+          <entry key="project.open.time.0" value="3" />
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.5" value="4" />
           <entry key="project.open.time.6" value="2" />
-          <entry key="project.opened" value="12" />
+          <entry key="project.opened" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -48,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task 1/imgFeaturesHomography.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="68" column="77" selection-start-line="68" selection-start-column="66" selection-end-line="68" selection-end-column="77" />
+            <state relative-caret-position="57">
+              <caret line="68" column="75" selection-start-line="68" selection-start-column="66" selection-end-line="68" selection-end-column="75" />
               <folding>
                 <element signature="e#252#262#0" expanded="true" />
               </folding>
@@ -94,6 +94,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -110,11 +111,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Linguistics/Project/semeval_task9_train_pair/Train/DrugBank" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Task 2" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -198,8 +198,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Task 1/imgFeaturesHomography.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="68" column="77" selection-start-line="68" selection-start-column="66" selection-end-line="68" selection-end-column="77" />
+        <state relative-caret-position="57">
+          <caret line="68" column="75" selection-start-line="68" selection-start-column="66" selection-end-line="68" selection-end-column="75" />
           <folding>
             <element signature="e#252#262#0" expanded="true" />
           </folding>
