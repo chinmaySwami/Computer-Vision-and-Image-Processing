@@ -28,23 +28,23 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="2699" />
+          <entry key="py" value="2776" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="2699" />
+          <entry key="Python" value="2776" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/kMeansClustering.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="49" column="58" selection-start-line="49" selection-start-column="58" selection-end-line="49" selection-end-column="58" />
+            <state relative-caret-position="638">
+              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
               <folding>
                 <element signature="e#240#258#0" expanded="true" />
               </folding>
@@ -52,16 +52,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="698">
-              <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+            <state relative-caret-position="240">
+              <caret line="75" column="34" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
               <folding>
                 <element signature="e#1#19#0" expanded="true" />
-                <marker date="1541277965962" expanded="true" signature="163:164" ph="..." />
-                <marker date="1541277965962" expanded="true" signature="659:664" ph="..." />
-                <marker date="1541277965962" expanded="true" signature="2085:2870" ph="..." />
+                <marker date="1541280259715" expanded="true" signature="163:164" ph="..." />
+                <marker date="1541280259715" expanded="true" signature="659:664" ph="..." />
+                <marker date="1541280259715" expanded="true" signature="2085:2847" ph="..." />
               </folding>
             </state>
           </provider>
@@ -82,8 +82,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/functions.py" />
         <option value="$PROJECT_DIR$/kMeansClustering.py" />
+        <option value="$PROJECT_DIR$/functions.py" />
       </list>
     </option>
   </component>
@@ -197,25 +197,25 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/functions.py">
+    <entry file="file://$PROJECT_DIR$/kMeansClustering.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="698">
-          <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+        <state relative-caret-position="638">
+          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
           <folding>
-            <element signature="e#1#19#0" expanded="true" />
-            <marker date="1541277965962" expanded="true" signature="163:164" ph="..." />
-            <marker date="1541277965962" expanded="true" signature="659:664" ph="..." />
-            <marker date="1541277965962" expanded="true" signature="2085:2870" ph="..." />
+            <element signature="e#240#258#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/kMeansClustering.py">
+    <entry file="file://$PROJECT_DIR$/functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="49" column="58" selection-start-line="49" selection-start-column="58" selection-end-line="49" selection-end-column="58" />
+        <state relative-caret-position="240">
+          <caret line="75" column="34" selection-start-line="75" selection-start-column="34" selection-end-line="75" selection-end-column="34" />
           <folding>
-            <element signature="e#240#258#0" expanded="true" />
+            <element signature="e#1#19#0" expanded="true" />
+            <marker date="1541280259715" expanded="true" signature="163:164" ph="..." />
+            <marker date="1541280259715" expanded="true" signature="659:664" ph="..." />
+            <marker date="1541280259715" expanded="true" signature="2085:2847" ph="..." />
           </folding>
         </state>
       </provider>

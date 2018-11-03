@@ -73,7 +73,7 @@ def plotClusters(X,clusterCenters,XClassified,fineName):
         plt.text(centerx[i][0] + 0.005, centery[i][0], s='(' + str(centerx[i][0]) + ',' + str(centery[i][0]) + ')')
 
     for i in range(len(X)):
-        plt.scatter(xX[i], yX[i], facecolors='none', edgecolor=XClassified[i], marker="^")
+        plt.scatter(xX[i], yX[i], color=XClassified[i], marker="^")
         plt.text(xX[i][0] + 0.005, yX[i][0], s='(' + str(xX[i][0]) + ',' + str(yX[i][0]) + ')')
     # plt.show()
     plt.savefig(fineName)
