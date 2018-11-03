@@ -79,3 +79,8 @@ def plotClusters(X,clusterCenters,XClassified,fineName):
     plt.savefig(fineName)
     plt.clf()
 
+def calculateColorDistance(clusterCenters,image,colorDistance):
+    for imgX in range(len(image.shape[1])):
+        for imgY in range(len(image.shape[0])):
+            
+    return colorDistance

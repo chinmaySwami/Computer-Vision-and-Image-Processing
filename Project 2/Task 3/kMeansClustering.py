@@ -6,6 +6,7 @@ import numpy as np
 from functions import calculateDistance,chooseCenteroid,caculateNewMean,plotClusters
 import matplotlib.pyplot  as plt
 import cv2
+import random
 
 clusterCenters = [[6.2, 3.2],
                   [6.6, 3.7],
@@ -63,10 +64,4 @@ XClassified = chooseCenteroid(XDistance,XClassified)
 print(XClassified)
 
 plotClusters(X,clusterCenters,XClassified,'task3_iter2_b.png')
-
-# Task 3.4
-
-image = cv2.imread("Images/baboon.jpg")
-
-noOfClusters=3
 
