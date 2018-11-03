@@ -52,7 +52,7 @@ img5 = cv2.drawMatches(image1G, keyPointImage1, image2G, keyPointImage2, goodMat
 cv2.imwrite("task1_matches.jpg",img5)
 
 #  Code to find corners after transformation is applied
-#  Ccalculating the end points
+#  Calculating the end points
 endPoints = np.array([
     [0,0],
     [0,height1],
@@ -72,7 +72,7 @@ intermediateTransformationMatrix = np.array([
 ])
 
 homographyMatrix = intermediateTransformationMatrix.dot(homographyMatrix)
-print("New Homography matrix H is: \n",homographyMatrix)
+print("\n New Homography matrix H is: \n",homographyMatrix)
 
 # image1GBig = cv2.copyMakeBorder(image1G,0,0,320,0,cv2.BORDER_CONSTANT)
 # image2GBig = cv2.copyMakeBorder(image2G,50,0,200,0,cv2.BORDER_CONSTANT)
@@ -81,8 +81,8 @@ print("New Homography matrix H is: \n",homographyMatrix)
 
 result1 = cv2.warpPerspective(image1G, homographyMatrix, (boundedWidth, boundedHeight), flags=cv2.INTER_CUBIC)
 
-
-result = np.zeros((max(boundedHeight, height2), width2+width2), dtype=np.uint8)
+#  Creating a blank image
+result = np.zeros((max(boundedHeight+1, height2), width2+width2), dtype=np.uint8)
 
 print("shape of result:",result.shape)
 print("shape of result1:",result1.shape)
@@ -90,5 +90,5 @@ print("shape of result1:",result1.shape)
 cv2.imwrite("image1wrap.jpg",result1)
 # result1[:height1, width1:] = image2G
 result[:boundedHeight, :boundedWidth] = result1
-result[boundedWidth-height2:, width1:] = image2G
+result[boundedHeight-height2:, width1:] = image2G
 cv2.imwrite("after.jpg",result)
