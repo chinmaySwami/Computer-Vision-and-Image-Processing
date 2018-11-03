@@ -3,7 +3,7 @@
 # Author         :- Chinmay Prakash Swami
 # *****************************************************************************
 import numpy as np
-from functions import calculateDistance,chooseCenteroid
+from functions import calculateDistance,chooseCenteroid,caculateNewMean,plotClusters
 import matplotlib.pyplot  as plt
 
 clusterCenters = [[6.2, 3.2],
@@ -26,25 +26,30 @@ XDistance = []
 XDistance = calculateDistance(clusterCenters, X, XDistance)
 XClassified = []
 print(len(XDistance), XDistance)
-
 #  Classify the points based on distance calculated earlier
 XClassified = chooseCenteroid(XDistance,XClassified)
 print(XClassified)
 
-#  Extract X & Y co-ordinates
-arrayX = np.asarray(X)
-arrayY = np.asarray(X)
-xX = arrayX[: , :1].tolist()
-yX = arrayY[: , 1:].tolist()
+# Plot the cluesters
+plotClusters(X,clusterCenters,XClassified)
 
-plt.scatter(xX,yX,facecolors='none',edgecolor = XClassified,marker="^")
-for i in range(len(X)):
-    plt.text(str(xX[i]),str(yX[i]),s='1')
-plt.show()
+# Task 3.2:- Calculate new cluster centroids
 
+clusterCenters = caculateNewMean(X,XClassified)
+print(clusterCenters)
 
-# for x,y,color in zip(xX,yX,XClassified):
-#     plt.scatter(x,y,color = color)
+plotClusters(X,clusterCenters,XClassified)
 
+# Task 3.3 :- calculate euclidian disctances for new mean and generate clusters
 
+XDistance = []
+# Calculate the distances of points from clusters
+XDistance = calculateDistance(clusterCenters, X, XDistance)
+XClassified = []
+print(len(XDistance), XDistance)
+#  Classify the points based on distance calculated earlier
+XClassified = chooseCenteroid(XDistance,XClassified)
+print(XClassified)
+
+plotClusters(X,clusterCenters,XClassified)
 

@@ -1,6 +1,9 @@
 
 import numpy as np
+import matplotlib.pyplot as plt
 import math
+
+clusterCentersColor = ['Red', 'Green', 'Blue']
 
 def calculateDistance(clusterCenters,X,XDistance):
     for dataPts in range(len(X)):
@@ -22,9 +25,57 @@ def chooseCenteroid(XDistance,XClassified):
         if minValIndexLoc == 0:  # belongs to cluster 1
             XClassified.append('Red')
         elif minValIndexLoc == 1:  # belongs to cluster 2
-            XClassified.append('Blue')
-        elif minValIndexLoc == 2:  # belongs to cluster 3
             XClassified.append('Green')
+        elif minValIndexLoc == 2:  # belongs to cluster 3
+            XClassified.append('Blue')
     return XClassified
 
+def caculateNewMean(X,XClassified):
+    sumRedX = 0
+    sumRedY = 0
+    countRed = 0
+    sumBlueX = 0
+    sumBlueY = 0
+    countBlue = 0
+    sumGreenX = 0
+    sumGreenY = 0
+    countGreen = 0
+
+    for index in range(len(X)):
+        if XClassified[index] == 'Red':  # belongs to cluster 1
+            sumRedX += X[index][0]
+            sumRedY += X[index][1]
+            countRed += 1
+        elif XClassified[index] == 'Blue':  # belongs to cluster 2
+            sumBlueX += X[index][0]
+            sumBlueY += X[index][1]
+            countBlue += 1
+        elif XClassified[index] == 'Green':  # belongs to cluster 3
+            sumGreenX += X[index][0]
+            sumGreenY += X[index][1]
+            countGreen += 1
+    newCenters = [[sumRedX/countRed, sumRedY/countRed],
+                  [sumGreenX / countGreen, sumGreenY / countGreen],
+                  [sumBlueX / countBlue, sumBlueY / countBlue]]
+
+    return newCenters
+
+def plotClusters(X,clusterCenters,XClassified):
+    #  Extract X & Y co-ordinates
+    arrayX = np.asarray(X)
+    arrayClusterCenters = np.asarray(clusterCenters)
+    xX = arrayX[:, :1].tolist()
+    yX = arrayX[:, 1:].tolist()
+    centerx = arrayClusterCenters[:, :1].tolist()
+    centery = arrayClusterCenters[:, 1:].tolist()
+
+    plt.scatter(centerx, centery, color=clusterCentersColor, marker="o")
+
+    for i in range(len(clusterCenters)):
+        plt.text(centerx[i][0] + 0.005, centery[i][0], s='(' + str(centerx[i][0]) + ',' + str(centery[i][0]) + ')')
+
+    for i in range(len(X)):
+        plt.scatter(xX[i], yX[i], facecolors='none', edgecolor=XClassified[i], marker="^")
+        plt.text(xX[i][0] + 0.005, yX[i][0], s='(' + str(xX[i][0]) + ',' + str(yX[i][0]) + ')')
+    plt.show()
 
