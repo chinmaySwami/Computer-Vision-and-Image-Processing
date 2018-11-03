@@ -58,7 +58,7 @@ def caculateNewMean(X,XClassified):
 
     return newCenters
 
-def plotClusters(X,clusterCenters,XClassified):
+def plotClusters(X,clusterCenters,XClassified,fineName):
     #  Extract X & Y co-ordinates
     arrayX = np.asarray(X)
     arrayClusterCenters = np.asarray(clusterCenters)
@@ -75,6 +75,7 @@ def plotClusters(X,clusterCenters,XClassified):
     for i in range(len(X)):
         plt.scatter(xX[i], yX[i], facecolors='none', edgecolor=XClassified[i], marker="^")
         plt.text(xX[i][0] + 0.005, yX[i][0], s='(' + str(xX[i][0]) + ',' + str(yX[i][0]) + ')')
-    plt.show()
-    # plt.imsave
+    # plt.show()
+    plt.savefig(fineName)
+    plt.clf()
 
