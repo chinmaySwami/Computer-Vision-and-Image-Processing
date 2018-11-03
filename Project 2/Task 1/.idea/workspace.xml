@@ -12,7 +12,7 @@
     <session id="981645365">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.0" value="9" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.5" value="1" />
@@ -48,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/imgFeaturesHomography.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="834">
-              <caret line="89" column="37" lean-forward="true" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
+            <state relative-caret-position="594">
+              <caret line="92" column="48" lean-forward="true" selection-start-line="92" selection-start-column="48" selection-end-line="92" selection-end-column="48" />
               <folding>
                 <element signature="e#252#262#0" expanded="true" />
               </folding>
@@ -176,14 +176,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28794327" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28794327" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -203,8 +202,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/imgFeaturesHomography.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="834">
-          <caret line="89" column="37" lean-forward="true" selection-start-line="89" selection-start-column="37" selection-end-line="89" selection-end-column="37" />
+        <state relative-caret-position="594">
+          <caret line="92" column="48" lean-forward="true" selection-start-line="92" selection-start-column="48" selection-end-line="92" selection-end-column="48" />
           <folding>
             <element signature="e#252#262#0" expanded="true" />
           </folding>
