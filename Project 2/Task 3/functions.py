@@ -19,9 +19,7 @@ def calculateDistance(clusterCenters,X,XDistance):
 
 def chooseCenteroid(XDistance,XClassified):
     for distances in range(len(XDistance)):
-        print(XDistance[distances])
         minValIndexLoc = XDistance[distances].index(min(XDistance[distances]))
-        print(minValIndexLoc)
         if minValIndexLoc == 0:  # belongs to cluster 1
             XClassified.append('Red')
         elif minValIndexLoc == 1:  # belongs to cluster 2
@@ -78,4 +76,5 @@ def plotClusters(X,clusterCenters,XClassified):
         plt.scatter(xX[i], yX[i], facecolors='none', edgecolor=XClassified[i], marker="^")
         plt.text(xX[i][0] + 0.005, yX[i][0], s='(' + str(xX[i][0]) + ',' + str(yX[i][0]) + ')')
     plt.show()
+    # plt.imsave
 

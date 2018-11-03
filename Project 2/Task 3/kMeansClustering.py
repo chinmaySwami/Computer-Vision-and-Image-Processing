@@ -33,20 +33,29 @@ print(XClassified)
 # Plot the cluesters
 plotClusters(X,clusterCenters,XClassified)
 
-# Task 3.2:- Calculate new cluster centroids
+
+# *********************** Task 3.2:- Calculate new cluster centroids ***************************
 
 clusterCenters = caculateNewMean(X,XClassified)
-print(clusterCenters)
 
 plotClusters(X,clusterCenters,XClassified)
+XDistance = []
+XDistance = calculateDistance(clusterCenters, X, XDistance)
+XClassified = []
+XClassified = chooseCenteroid(XDistance,XClassified)
+print(XClassified)
 
-# Task 3.3 :- calculate euclidian disctances for new mean and generate clusters
+#  Classify the points based on distance calculated earlier
+XClassified = chooseCenteroid(XDistance,XClassified)
 
+
+# ************* Task 3.3 :- calculate euclidian disctances for new mean and generate clusters ************
+clusterCenters = caculateNewMean(X,XClassified)
 XDistance = []
 # Calculate the distances of points from clusters
 XDistance = calculateDistance(clusterCenters, X, XDistance)
 XClassified = []
-print(len(XDistance), XDistance)
+
 #  Classify the points based on distance calculated earlier
 XClassified = chooseCenteroid(XDistance,XClassified)
 print(XClassified)
