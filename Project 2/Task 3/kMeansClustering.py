@@ -37,7 +37,9 @@ arrayY = np.asarray(X)
 xX = arrayX[: , :1].tolist()
 yX = arrayY[: , 1:].tolist()
 
-plt.scatter(xX,yX,color = XClassified,marker="^")
+plt.scatter(xX,yX,facecolors='none',edgecolor = XClassified,marker="^")
+for i in range(len(X)):
+    plt.text(str(xX[i]),str(yX[i]),s='1')
 plt.show()
 
 
