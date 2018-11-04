@@ -82,7 +82,7 @@ def plotClusters(X,clusterCenters,XClassified,fineName):
 def calculateColorDistance(noOfClusters, image, clusterCenters):
     colorDistance = np.zeros((noOfClusters, image.shape[0]))
     print("in function")
-    for imgX in range(image.shape[0]- 262140):
+    for imgX in range(image.shape[0]):
         x = image[imgX]
         for centers in range(noOfClusters):
             y = clusterCenters[centers]

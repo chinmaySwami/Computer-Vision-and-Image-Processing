@@ -31,6 +31,7 @@ destinationPoints = np.float32([keyPointImage2[m.trainIdx].pt for m in goodMatch
 # Generate Fundamental matrix
 fundamentalMatrix, inOut = cv2.findFundamentalMat(sourcePoints,destinationPoints,cv2.RANSAC)
 
+print(fundamentalMatrix)
 # Selecting only inliers
 sourcePoints = sourcePoints[inOut.ravel()==1]
 destinationPoints = destinationPoints[inOut.ravel()==1]
@@ -41,11 +42,12 @@ print("Destination: \n",destinationPoints.shape)
 # Selecting 10 random points
 sourcePointsSmall = []
 destinationPointsSmall = []
-
+print(len(sourcePoints))
 for i in range(10):
     index = random.randint(0,min(len(sourcePoints)-1,len(destinationPoints)-1))
     sourcePointsSmall.append(sourcePoints[index])
     destinationPointsSmall.append(destinationPoints[index])
+
 
 sourcePointsSmall = np.asarray(sourcePointsSmall)
 destinationPointsSmall = np.asarray(destinationPointsSmall)

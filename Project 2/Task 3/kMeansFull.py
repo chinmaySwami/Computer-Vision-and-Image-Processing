@@ -23,7 +23,7 @@ print("cluster Centers \n", clusterCenters)
 image = image.reshape((image.shape[0] * image.shape[1], 3))
 print("image Shape ", image.shape)
 
-for i in range(5):
+for i in range(3):
 
     # **************   Calculating euclidean distances  *************************
     colorDistance = calculateColorDistance(noOfClusters, image, clusterCenters)
@@ -41,11 +41,10 @@ for i in range(5):
 #
 for centers in range(noOfClusters):
     for imgIndex in range(image.shape[0]):
-        if ptsClassified[imgIndex][centers] == 1:
-            image[imgIndex] = 
+        if ptsClassified[centers][imgIndex] == 1:
+            image[imgIndex] = clusterCenters[centers]
 
-
-image = image.reshape((imgHeight,imgWidth,noOfClusters))
+image = image.reshape((imgHeight,imgWidth,3))
 colorDistance = colorDistance.reshape((imgHeight,imgWidth,noOfClusters))
 image = image * 255
 image = image.astype(np.uint8)
@@ -54,5 +53,5 @@ colorDistance = colorDistance * 255
 colorDistance = colorDistance.astype(np.uint8)
 
 print(colorDistance)
-cv2.imwrite("task3_baboon_3.jpg", colorDistance)
+cv2.imwrite("task3_baboon_3.jpg", image)
 
