@@ -1,5 +1,5 @@
 import numpy as np
-from functions import calculateDistance,chooseCenteroid,caculateNewMean,plotClusters
+from functions import calculateColorDistance
 import matplotlib.pyplot  as plt
 import cv2
 import random
@@ -18,6 +18,6 @@ for times in range(noOfClusters):
 # to get rid of the dtype info
 clusterCenters = np.array(clusterCenters)
 print(clusterCenters)
-
-colorDistance = []
-
+image = image.reshape((image.shape[0] * image.shape[1], 3))
+print(image.shape)
+colorDistance = calculateColorDistance(clusterCenters, image, clusterCenters)

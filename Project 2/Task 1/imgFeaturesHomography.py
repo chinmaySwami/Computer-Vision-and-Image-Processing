@@ -6,6 +6,7 @@
 import cv2
 import  numpy as np
 from functions import generateKeypoints,generateMatches
+import random
 
 # Task1.1
 image1 = cv2.imread("Images/mountain1.jpg")
@@ -40,12 +41,24 @@ homographyMatrix, inOut = cv2.findHomography(sourcePoints, destinationPoints, cv
 print("Old Homography matrix H is: \n",homographyMatrix)
 matchedMask = inOut.ravel().tolist() # ravel is used to flatten the inOut array
 
-unique, counts = np.unique(matchedMask, return_counts=True)
-print("\n Inliers and Outliers Stats: ",dict(zip(unique, counts)))
+#  Calculate 10 random inliers
+matchedMask2 = np.zeros(len(matchedMask))
+matchedMask2 = matchedMask2.tolist()
+count = 0
+print("started random")
+while count <= 10:
+    index = random.randint(0, len(matchedMask))
+    if matchedMask[index] == 1:
+        matchedMask2[index] = 1
+        count += 1
 
-parameters = dict(matchColor = (0,200,0), # draw matches in black color
+print(matchedMask2)
+unique, counts = np.unique(matchedMask, return_counts=True)
+print("\n Inliers and Outliers Stats: ", dict(zip(unique, counts)))
+
+parameters = dict(matchColor = (0, 200, 0), # draw matches in black color
                 singlePointColor = None,
-                matchesMask = matchedMask, # draw only inliers
+                matchesMask = matchedMask2, # draw only inliers
                 flags = 2)
 
 img5 = cv2.drawMatches(image1G, keyPointImage1, image2G, keyPointImage2, goodMatches, None, **parameters)
@@ -68,7 +81,7 @@ x, y, boundedWidth, boundedHeight = cv2.boundingRect(corners)
 intermediateTransformationMatrix = np.array([
   [ 1, 0, -x ],
   [ 0, 1, -y ],
-  [ 0, 0,   1 ]
+  [ 0, 0,  1 ]
 ])
 
 homographyMatrix = intermediateTransformationMatrix.dot(homographyMatrix)
@@ -82,7 +95,7 @@ print("\n New Homography matrix H is: \n",homographyMatrix)
 result1 = cv2.warpPerspective(image1G, homographyMatrix, (boundedWidth, boundedHeight), flags=cv2.INTER_CUBIC)
 
 #  Creating a blank image
-result = np.zeros((max(boundedHeight+1, height2), width2+width2), dtype=np.uint8)
+result = np.zeros((max(boundedHeight, height2), width2+width2), dtype=np.uint8)
 
 print("shape of result:",result.shape)
 print("shape of result1:",result1.shape)
