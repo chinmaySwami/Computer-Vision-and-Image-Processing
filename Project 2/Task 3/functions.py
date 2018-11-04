@@ -79,10 +79,10 @@ def plotClusters(X,clusterCenters,XClassified,fineName):
     plt.savefig(fineName)
     plt.clf()
 
-def calculateColorDistance(noOfClusters,image,clusterCenters):
+def calculateColorDistance(noOfClusters, image, clusterCenters):
     colorDistance = np.zeros((noOfClusters, image.shape[0]))
     print("in function")
-    for imgX in range(image.shape[0]):
+    for imgX in range(image.shape[0]- 262140):
         x = image[imgX]
         for centers in range(noOfClusters):
             y = clusterCenters[centers]
@@ -90,7 +90,7 @@ def calculateColorDistance(noOfClusters,image,clusterCenters):
             colorDistance[centers][imgX] = distance
     return colorDistance
 
-def findCluster(colorDistance,ptsClassified,noOfClusters):
+def findCluster(colorDistance, ptsClassified, noOfClusters):
     colorDistancecolumns = []
     for imgX in range(colorDistance.shape[1]):
         for centers in range(noOfClusters):
@@ -102,6 +102,15 @@ def findCluster(colorDistance,ptsClassified,noOfClusters):
         colorDistancecolumns = []
     return ptsClassified
 
+def reCalculateMean(ptsClassified, colorDistance, noOfClusters, clusterCenters):
+    clusterCenters = []
+    for cluster in range(noOfClusters):
+        newMean = []
+        for imgX in range(colorDistance.shape[0]):
+            if ptsClassified[imgX][cluster] == 1:
+                newMean.append(colorDistance[:,cluster])
 
+        clusterCenters.append(np.mean(newMean,axis = 0))
+    return clusterCenters
 
 
