@@ -1,5 +1,5 @@
 import numpy as np
-from functions import calculateColorDistance
+from functions import calculateColorDistance,findCluster
 import matplotlib.pyplot  as plt
 import cv2
 import random
@@ -19,5 +19,11 @@ for times in range(noOfClusters):
 clusterCenters = np.array(clusterCenters)
 print(clusterCenters)
 image = image.reshape((image.shape[0] * image.shape[1], 3))
-print(image.shape)
-colorDistance = calculateColorDistance(clusterCenters, image, clusterCenters)
+print(type(image))
+colorDistance = calculateColorDistance(noOfClusters, image, clusterCenters)
+
+ptsClassified = np.zeros((noOfClusters, image.shape[0]))
+ptsClassified = findCluster(colorDistance,ptsClassified,noOfClusters)
+
+print(ptsClassified)
+

@@ -47,7 +47,7 @@ matchedMask2 = matchedMask2.tolist()
 count = 0
 print("started random")
 while count <= 10:
-    index = random.randint(0, len(matchedMask))
+    index = random.randint(0, len(matchedMask)-1)
     if matchedMask[index] == 1:
         matchedMask2[index] = 1
         count += 1
@@ -76,7 +76,6 @@ endPoints = np.array([
 corners = cv2.perspectiveTransform(np.float32([endPoints]), homographyMatrix)
 # Find the bounding rectangle
 x, y, boundedWidth, boundedHeight = cv2.boundingRect(corners)
-
 # Translating -ve points which are causing loss of pixels into +Ve points
 intermediateTransformationMatrix = np.array([
   [ 1, 0, -x ],
@@ -94,6 +93,9 @@ print("\n New Homography matrix H is: \n",homographyMatrix)
 
 result1 = cv2.warpPerspective(image1G, homographyMatrix, (boundedWidth, boundedHeight), flags=cv2.INTER_CUBIC)
 
+result1 = cv2.copyMakeBorder(result1,0,15,10,0,cv2.BORDER_CONSTANT)
+cv2.imwrite("image1wrap.jpg",result1)
+boundedHeight, boundedWidth = result1.shape
 #  Creating a blank image
 result = np.zeros((max(boundedHeight, height2), width2+width2), dtype=np.uint8)
 

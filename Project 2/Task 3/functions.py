@@ -79,16 +79,29 @@ def plotClusters(X,clusterCenters,XClassified,fineName):
     plt.savefig(fineName)
     plt.clf()
 
-def calculateColorDistance(clusterCenters,image,colorDistance):
-    XDistanceTemp = []
+def calculateColorDistance(noOfClusters,image,clusterCenters):
+    colorDistance = np.zeros((noOfClusters, image.shape[0]))
     print("in function")
-    for imgX in range(image.shape[0]-262143):
+    for imgX in range(image.shape[0]):
         x = image[imgX]
-        for centers in range(len(clusterCenters)):
+        for centers in range(noOfClusters):
             y = clusterCenters[centers]
-            print(x,y)
-            print(np.linalg.norm(x-y))
-            # colorDistance.append(XDistanceTemp)
-            # colorDistance[imgX,imgY] = XDistanceTemp
+            distance = np.linalg.norm(x-y)
+            colorDistance[centers][imgX] = distance
     return colorDistance
+
+def findCluster(colorDistance,ptsClassified,noOfClusters):
+    colorDistancecolumns = []
+    for imgX in range(colorDistance.shape[1]):
+        for centers in range(noOfClusters):
+            colorDistancecolumns.append(colorDistance[centers][imgX])
+
+        minValIndexLoc = colorDistancecolumns.index(min(colorDistancecolumns))
+
+        ptsClassified[minValIndexLoc][imgX] = 1
+        colorDistancecolumns = []
+    return ptsClassified
+
+
+
 
