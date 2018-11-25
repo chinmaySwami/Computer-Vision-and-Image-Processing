@@ -1,10 +1,13 @@
 # ****************** CVIP Project 2 Task 1 ***********************************
 # Title          :- Image Features and Homography
 # Author         :- Chinmay Prakash Swami
+# Refrences      :- Open CV Tutorials
+#                   http://answers.opencv.org/question/144252/perspective-transform-without-crop/
+#                   To solve pixel loss issue
 # *****************************************************************************
-
+import numpy as np;
 import cv2
-import  numpy as np
+
 from functions import generateKeypoints,generateMatches
 import random
 
@@ -38,23 +41,20 @@ sourcePoints = np.float32([keyPointImage1[m.queryIdx].pt for m in goodMatches])
 destinationPoints = np.float32([keyPointImage2[m.trainIdx].pt for m in goodMatches])
 
 homographyMatrix, inOut = cv2.findHomography(sourcePoints, destinationPoints, cv2.RANSAC, 5.0)
-print("Old Homography matrix H is: \n",homographyMatrix)
+print("Homography matrix H is: \n",homographyMatrix)
 matchedMask = inOut.ravel().tolist() # ravel is used to flatten the inOut array
 
 #  Calculate 10 random inliers
 matchedMask2 = np.zeros(len(matchedMask))
 matchedMask2 = matchedMask2.tolist()
 count = 0
-print("started random")
 while count <= 10:
     index = random.randint(0, len(matchedMask)-1)
     if matchedMask[index] == 1:
         matchedMask2[index] = 1
         count += 1
-
-print(matchedMask2)
-unique, counts = np.unique(matchedMask, return_counts=True)
-print("\n Inliers and Outliers Stats: ", dict(zip(unique, counts)))
+# unique, counts = np.unique(matchedMask, return_counts=True)
+# print("\n Inliers and Outliers Stats: ", dict(zip(unique, counts)))
 
 parameters = dict(matchColor = (0, 200, 0), # draw matches in black color
                 singlePointColor = None,
@@ -86,24 +86,14 @@ intermediateTransformationMatrix = np.array([
 homographyMatrix = intermediateTransformationMatrix.dot(homographyMatrix)
 print("\n New Homography matrix H is: \n",homographyMatrix)
 
-# image1GBig = cv2.copyMakeBorder(image1G,0,0,320,0,cv2.BORDER_CONSTANT)
-# image2GBig = cv2.copyMakeBorder(image2G,50,0,200,0,cv2.BORDER_CONSTANT)
-# image2G = cv2.resize(image2G,(778 ,550))
-# cv2.imwrite("newimage2.jpg",image1GBig)
-
 result1 = cv2.warpPerspective(image1G, homographyMatrix, (boundedWidth, boundedHeight), flags=cv2.INTER_CUBIC)
-
 result1 = cv2.copyMakeBorder(result1,0,15,10,0,cv2.BORDER_CONSTANT)
 cv2.imwrite("image1wrap.jpg",result1)
 boundedHeight, boundedWidth = result1.shape
+
 #  Creating a blank image
 result = np.zeros((max(boundedHeight, height2), width2+width2), dtype=np.uint8)
 
-print("shape of result:",result.shape)
-print("shape of result1:",result1.shape)
-
-cv2.imwrite("image1wrap.jpg",result1)
-# result1[:height1, width1:] = image2G
 result[:boundedHeight, :boundedWidth] = result1
 result[boundedHeight-height2:, width1:] = image2G
-cv2.imwrite("after.jpg",result)
+cv2.imwrite("task1_pano.jpg",result)

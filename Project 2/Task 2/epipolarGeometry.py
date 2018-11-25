@@ -1,5 +1,10 @@
+# ****************** CVIP Project 2 Task 2 ***********************************
+# Title          :- Image Features and Homography
+# Author         :- Chinmay Prakash Swami
+# Refrences      :- Open CV Tutorials
+# *****************************************************************************
+import numpy as np;
 import cv2
-import numpy as np
 from matplotlib import pyplot as plt
 from functions import generateMatches, generateKeypoints, drawLines
 import random
@@ -31,55 +36,41 @@ destinationPoints = np.float32([keyPointImage2[m.trainIdx].pt for m in goodMatch
 # Generate Fundamental matrix
 fundamentalMatrix, inOut = cv2.findFundamentalMat(sourcePoints,destinationPoints,cv2.RANSAC)
 
-print(fundamentalMatrix)
+print("Fundamental matrix: \n",fundamentalMatrix)
 # Selecting only inliers
 sourcePoints = sourcePoints[inOut.ravel()==1]
 destinationPoints = destinationPoints[inOut.ravel()==1]
 
-print("Source: \n",sourcePoints.shape)
-print("Destination: \n",destinationPoints.shape)
-
 # Selecting 10 random points
 sourcePointsSmall = []
 destinationPointsSmall = []
-print(len(sourcePoints))
 for i in range(10):
     index = random.randint(0,min(len(sourcePoints)-1,len(destinationPoints)-1))
     sourcePointsSmall.append(sourcePoints[index])
     destinationPointsSmall.append(destinationPoints[index])
 
-
 sourcePointsSmall = np.asarray(sourcePointsSmall)
 destinationPointsSmall = np.asarray(destinationPointsSmall)
-# print("Source: \n",sourcePointsSmall)
-# print("Destination: \n",destinationPointsSmall)
-
 
 # Find epilines corresponding to points in right image (second image) and
 # drawing its lines on left image
 lines1 = cv2.computeCorrespondEpilines(destinationPointsSmall.reshape(-1,1,2), 2,fundamentalMatrix)
 lines1 = lines1.reshape(-1,3)
-img5,img6 = drawLines(image1G,image2G,lines1,sourcePointsSmall,destinationPointsSmall)
+epiRight,img6 = drawLines(image1G,image2G,lines1,sourcePointsSmall,destinationPointsSmall)
 
 # Find epilines corresponding to points in left image (first image) and
 # drawing its lines on right image
 lines2 = cv2.computeCorrespondEpilines(sourcePointsSmall.reshape(-1,1,2), 1,fundamentalMatrix)
 lines2 = lines2.reshape(-1,3)
-img3,img4 = drawLines(image2G,image1G,lines2,destinationPointsSmall,sourcePointsSmall)
+epiLeft,img4 = drawLines(image2G,image1G,lines2,destinationPointsSmall,sourcePointsSmall)
 
-cv2.imwrite("task2_epi_right.jpg",img5)
-cv2.imwrite("task2_epi_left.jpg",img3)
+cv2.imwrite("task2_epi_right.jpg",epiRight)
+cv2.imwrite("task2_epi_left.jpg",epiLeft)
 
 #  Task 1.5
-
-# stereo = cv2.StereoSGBM_create(minDisparity=0, numDisparities = 160,blockSize=17) # satisfactory result
-
-# stereo = cv2.StereoSGBM_create(minDisparity=0, numDisparities = 80,blockSize=17,P1= 600,P2=2400)
 stereo = cv2.StereoSGBM_create(minDisparity=-20, numDisparities = 80,blockSize=17)
-disparities = stereo.compute(image1G,image2G).astype(np.float32)/16
-cv2.imwrite("task2 disparity.jpg",disparities)
-
+disparities = stereo.compute(image1G,image2G)
 
 plt.imshow(disparities,'gray')
-plt.imsave("test.png",disparities,cmap ='gray')
+plt.imsave("task2_disparity.png",disparities,cmap ='gray')
 plt.show()

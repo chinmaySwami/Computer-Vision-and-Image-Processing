@@ -1,4 +1,3 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 import math
@@ -82,9 +81,10 @@ def plotClusters(X,clusterCenters,XClassified,fineName):
 def calculateColorDistance(noOfClusters, image, clusterCenters):
     colorDistance = np.zeros((noOfClusters, image.shape[0]))
     print("in function")
+    print(image.shape[0])
     for imgX in range(image.shape[0]):
-        x = image[imgX]
         for centers in range(noOfClusters):
+            x = image[imgX]
             y = clusterCenters[centers]
             distance = np.linalg.norm(x-y)
             colorDistance[centers][imgX] = distance
@@ -98,19 +98,24 @@ def findCluster(colorDistance, ptsClassified, noOfClusters):
 
         minValIndexLoc = colorDistancecolumns.index(min(colorDistancecolumns))
 
-        ptsClassified[minValIndexLoc][imgX] = 1
+        ptsClassified[minValIndexLoc][imgX]= 1
         colorDistancecolumns = []
     return ptsClassified
 
-def reCalculateMean(ptsClassified, colorDistance, noOfClusters, clusterCenters):
+def reCalculateMean(ptsClassified, image,colorDistance, noOfClusters, clusterCenters,prevClusterCenters):
     clusterCenters = []
+    newMean = []
+    print(type(newMean))
+    print(prevClusterCenters.shape)
     for cluster in range(noOfClusters):
-        newMean = []
-        for imgX in range(colorDistance.shape[0]):
-            if ptsClassified[imgX][cluster] == 1:
-                newMean.append(colorDistance[:,cluster])
-
-        clusterCenters.append(np.mean(newMean,axis = 0))
+        for imgX in range(colorDistance.shape[1]):
+            if ptsClassified[cluster][imgX] == 1:
+                # print(colorDistance[imgX])
+                newMean.append(image[imgX])
+        if not newMean:
+            newMean.append(prevClusterCenters[cluster])
+        mean = np.mean(newMean, axis= 0)
+        clusterCenters.append(mean)
     return clusterCenters
 
 
