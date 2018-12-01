@@ -45,7 +45,7 @@ def performErosion(image, mask):
     while rowStart < 307:
         while columnStart < 348:
             imagePart = image[rowStart:rowStart+3, columnStart:columnStart+3]
-            allOnes = checkErosionCondition(imagePart,mask)
+            allOnes = checkErosionCondition(imagePart, mask)
             if allOnes:
                 imageTemp[rowStart+1][columnStart+1] = 1
             columnStart += 1
@@ -72,19 +72,6 @@ def performDilation(image, mask):
         anyOnes = False
     return imageTemp
 
-def generateFinalImage(imageWithPoints, maxSumofProduct):
-    pointCoordinates = []
-    percent = (90/100) * maxSumofProduct
-    print(maxSumofProduct, percent)
-    for imrow in range(0, len(imageWithPoints)):
-        for imcol in range(0, len(imageWithPoints[0])):
-            if imageWithPoints[imrow][imcol] >= percent:
-                imageWithPoints[imrow][imcol] = 255
-                pointCoordinates.append([imrow, imcol])
-            else:
-                imageWithPoints[imrow][imcol] = 0
-    print("Co-Ordinates of the points are:", pointCoordinates)
-    cv2.imwrite('points.jpg', imageWithPoints)
 
 
 
