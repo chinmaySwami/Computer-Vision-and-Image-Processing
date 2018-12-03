@@ -28,9 +28,9 @@ image = cv2.Laplacian(image,cv2.CV_32F)
 imageWithPoints, sumofProductList = detectPoints(image, mask)
 # imageWithPoints = abs(imageWithPoints) / max(abs(imageWithPoints))
 maxSumofProduct = max(sumofProductList)
-
+print(maxSumofProduct)
 cv2.imwrite('MaskOutput.jpg', imageWithPoints)
-generateFinalImage(imageWithPoints, maxSumofProduct, False, 90)
+generateFinalImage(imageWithPoints, maxSumofProduct, False, 27)
 
 #  ************************** Task 2.2 **********************************
 
