@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from functions import padd, detectEdges, hough_line, hough_lines_draw,detect_lines
+from functions import padd, detectEdges, hough_line, drawLinesOnImage
 import math
 
 # **********************Start:Performing Edge detection********************************
@@ -41,12 +41,18 @@ cv2.imwrite("ThresholdedY.jpg",img_opyNB)
 cv2.imwrite("ThresholdedX.jpg",img_opxNB)
 # **********************END:Thresholding the edge detected image *******************
 
+# **********************START:Generating diagonal Lines *******************
 print("Calculating for Diagonal Lines")
+imageC = cv2.imread('Images/hough.jpg')
 accumulator, thetas, rhos = hough_line(img_opyNB)
 cv2.imwrite("accumulator.jpg", accumulator)
-detect_lines(img, 9, accumulator, rhos, thetas)
+drawLinesOnImage(imageC, 9, accumulator, rhos, thetas,False)
+# **********************END:Generating diagonal Lines *******************
 
-print("Calculating for Horizontal Lines")
+# **********************START:Generating Vertical Lines *******************
+print("Calculating for Vertical Lines")
+imageC = cv2.imread('Images/hough.jpg')
 accumulator, thetas, rhos = hough_line(img_opxNB)
 cv2.imwrite("accumulator.jpg", accumulator)
-detect_lines(img, 8, accumulator, rhos, thetas)
+drawLinesOnImage(imageC, 8, accumulator, rhos, thetas,True)
+# **********************END:Generating Vertical Lines *******************

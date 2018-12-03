@@ -10,7 +10,6 @@ def padd(img):
         for imcol in range(1, len(imgL[0])-1):
             imgL[imrow][imcol] = img[imrow-1][imcol-1]
     imgL = np.asarray(imgL)
-    print(type(imgL))
     return imgL
 
 def findMax(img):
@@ -63,80 +62,67 @@ def detectEdges(img, sobelx, sobely, img_opx, img_opy, img_combined):
     img_opyN = findAbs(img_opy) / findMax(abs(img_opy))
     img_opyN = img_opyN * 255
     img_opyN = np.asarray(img_opyN, dtype=np.uint8)
-    # cv2.imwrite('Y_direction.jpg', img_opyN)
-
-    img_combinedN = findAbs(img_combined) / findMax(abs(img_combined))
-    # img_combinedN = img_combinedN * 255
-    # img_combinedN = np.asarray(img_combinedN, dtype=np.uint8)
-    # cv2.imwrite('Combined.jpg', img_combinedN)
 
     return img_opxN, img_opyN
+def carryoutVoting(image,cosValues, sinValues, numberOfThetaValues,diagonalLength):
+    # Generating accumulator array
+    accumulator = np.zeros((2 * diagonalLength, numberOfThetaValues), dtype=np.uint8)
+    # getting the X & Y co-ordinates of the edges. which are edges hence nonZero function is used
+    yIndexes, xIndexes = np.nonzero(image)
+    # Writing the code for the voting functionality
+    for i in range(len(xIndexes)):
+        # getting x and y values 1 at a time
+        x = xIndexes[i]
+        y = yIndexes[i]
+        for index in range(numberOfThetaValues):
+            # Calculate rho. diag_len is added for a positive index
+            rho = int(round(x * cosValues[index] + y * sinValues[index]) + diagonalLength)
+            accumulator[rho, index] += 1
+    return accumulator
 
+
+# Referred to https://alyssaq.github.io/2014/understanding-hough-transform/ for getting an idea of what
+# needs to be done
 def hough_line(img):
-  # Rho and Theta ranges
-  #  np.cos doesnt work with degrees hence it was changed to radians
+  # Rho and Theta ranges np.cos doesnt work with degrees hence it was changed to radians
   thetas = np.deg2rad(np.arange(-90.0, 90.0))
   imageWidth, imageHeight = img.shape
   # find max distance to avoid getting array out of bounds error
-  diag_len = int(np.sqrt(imageWidth * imageWidth + imageHeight * imageHeight))
-  rhos = np.linspace(-diag_len, diag_len, diag_len * 2.0)
-  # Cache some resuable values
-  cos_t = np.cos(thetas)
-  sin_t = np.sin(thetas)
-  num_thetas = len(thetas)
-  # Hough accumulator array of theta vs rho
-  accumulator = np.zeros((2 * diag_len, num_thetas), dtype=np.uint8)
-  # getting the X TY co-ordinates of the edges.
-  y_idxs, x_idxs = np.nonzero(img)
-  # Vote in the hough accumulator
-  for i in range(len(x_idxs)):
-    x = x_idxs[i]
-    y = y_idxs[i]
-    for t_idx in range(num_thetas):
-      # Calculate rho. diag_len is added for a positive index
-      rho = int(round(x * cos_t[t_idx] + y * sin_t[t_idx]) + diag_len)
-      accumulator[rho, t_idx] += 1
+  diagonalLength = int(np.sqrt(imageWidth * imageWidth + imageHeight * imageHeight))
+  rhos = np.linspace(-diagonalLength, diagonalLength, (diagonalLength * 2.0))
+  # Generating cos and sin values which will we will be using in voting code.
+  cosValues = np.cos(thetas)
+  sinValues = np.sin(thetas)
+  numberOfThetaValues = len(thetas)
+  accumulator = carryoutVoting(img, cosValues, sinValues, numberOfThetaValues, diagonalLength)
   return accumulator, thetas, rhos
 
-def hough_lines_draw(img, indicies, rhos, thetas):
-    ''' A function that takes indicies a rhos table and thetas table and draws
-        lines on the input images that correspond to these values. '''
-    for i in range(len(indicies)):
-        # reverse engineer lines from rhos and thetas
-        rho = rhos[indicies[i][0]]
-        theta = thetas[indicies[i][1]]
-        a = np.cos(theta)
-        b = np.sin(theta)
-        x0 = a*rho
-        y0 = b*rho
-        # these are then scaled so that the lines go off the edges of the image
-        x1 = int(x0 + 1000*(-b))
-        y1 = int(y0 + 1000*(a))
-        x2 = int(x0 - 1000*(-b))
-        y2 = int(y0 - 1000*(a))
+def drawLinesOnImage(image, noOfPeaks, acc, rhos, thetas, isItRed):
+    # Here I have implemented a mask which clears the surrounding 10 pixels of the max point detected
+    # by setting the co-ordinate values to 0. This is done to avoid plotting multiple lines for the same line.
 
-        cv2.line(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        cv2.imwrite('output.jpg', img)
-
-def detect_lines(image, noOfPeaks, acc, rhos, thetas):
     distHistorical = 0
     for i in range(noOfPeaks):
+        #  Finding the Max value
         arr = np.unravel_index(acc.argmax(), acc.shape)
         acc[arr[0]][arr[1]] = 0
+        # Making surrounding pixel value of the max pixel as 0
         acc[arr[0]-20:arr[0]+20, arr[1]-20:arr[0]+20] = 0
-
-        #acc[(i-h):(i-h)+5, (j-w):(j-w)+5] = 0
         rho = rhos[arr[0]]
         theta = thetas[arr[1]]
-        a = np.cos(theta)
-        b = np.sin(theta)
-        x0 = a*rho
-        y0 = b*rho
+        cosTheta = np.cos(theta)
+        sinTheta = np.sin(theta)
+        x0 = cosTheta*rho
+        y0 = sinTheta*rho
         # these are then scaled so that the lines go off the edges of the image
-        x1 = int(x0 + 1000*(-b))
-        y1 = int(y0 + 1000*(a))
-        x2 = int(x0 - 1000*(-b))
-        y2 = int(y0 - 1000*(a))
+        x1 = int(x0 + 850*(-sinTheta))
+        y1 = int(y0 + 850*(cosTheta))
+        x2 = int(x0 - 850*(-sinTheta))
+        y2 = int(y0 - 850*(cosTheta))
 
-        cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        cv2.imwrite('output.jpg', image)
+        if isItRed:
+            cv2.line(image, (x1, y1), (x2, y2), (0, 255, 10), 2)
+            cv2.imwrite('red_line.jpg', image)
+        else:
+            cv2.line(image, (x1, y1), (x2, y2), (0, 255, 10), 2)
+            cv2.imwrite('blue_lines.jpg', image)

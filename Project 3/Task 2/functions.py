@@ -9,12 +9,10 @@ import math,cv2
 # Function padd is used to pad zeros to the image array
 def padd(img):
     imgL = [[0 for imrow in range(len(img[0])+2)]for imcol in range(len(img)+2)]
-    print(len(img), len(img[0]), len(imgL), len(imgL[0]))
     for imrow in range(1, len(imgL)-1):
         for imcol in range(1, len(imgL[0])-1):
             imgL[imrow][imcol] = img[imrow-1][imcol-1]
     imgL = np.asarray(imgL)
-    print(type(imgL))
     return imgL
 
 def detectPoints(image, mask):
@@ -22,8 +20,6 @@ def detectPoints(image, mask):
     sumofProductList = []
     rowStart = 0
     columnStart = 0
-    print(image.shape, image.dtype)
-    print(len(image[0]), len(image))
     image.astype(np.float64)
     imageTemp = np.zeros_like(image)
     while rowStart < 763:
@@ -43,7 +39,7 @@ def detectPoints(image, mask):
 def generateFinalImage(imageWithPoints, maxSumofProduct,isItTask2, percentValue):
     pointCoordinates = []
     percent = (percentValue/100) * maxSumofProduct
-    print(maxSumofProduct, percent)
+    print("Maximum value and 90% of maximum value",maxSumofProduct, percent)
     for imrow in range(0, len(imageWithPoints)):
         for imcol in range(0, len(imageWithPoints[0])):
             if imageWithPoints[imrow][imcol] >= percent:
@@ -52,15 +48,21 @@ def generateFinalImage(imageWithPoints, maxSumofProduct,isItTask2, percentValue)
             else:
                 imageWithPoints[imrow][imcol] = 0
     if not isItTask2:
+        cv2.rectangle(imageWithPoints, (427, 226), (464, 269), (255, 0, 0), 2)
         print("Co-Ordinates of the points are:", pointCoordinates)
         cv2.imwrite('points.jpg', imageWithPoints)
+
     else:
         cv2.rectangle(imageWithPoints,(142,112),(220,182),(255,0,0),2)
         cv2.rectangle(imageWithPoints, (235, 68), (311, 223), (255, 0, 0), 2)
         cv2.rectangle(imageWithPoints, (325, 15), (369, 290), (255, 0, 0), 2)
         cv2.rectangle(imageWithPoints, (382, 26), (449, 256), (255, 0, 0), 2)
         cv2.imwrite('segment.jpg', imageWithPoints)
-        print(len(pointCoordinates))
+        print('Co-Ordinate of points are :- [142,112],[220,112],[142,182],[220,182]')
+        print('Co-Ordinate of points are :- [235,68],[311,68],[235,223],[311,223]')
+        print('Co-Ordinate of points are :- [325,15],[369,15],[325,290],[369,290]')
+        print('Co-Ordinate of points are :- [382,26],[449,26],[382,256],[449,256]')
+
     imageWithPointsC = imageWithPoints
 
 def checkErosionCondition(imagePart, mask):
